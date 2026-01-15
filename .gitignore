@@ -1,0 +1,15 @@
+# .NET
+bin/
+obj/
+
+# Flutter / Dart (safe)
+.dart_tool/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
