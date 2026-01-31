@@ -56,7 +56,6 @@ class ProductsTab extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // Search + (Admin-only) Add Category
               Row(
                 children: [
                   Expanded(
@@ -96,7 +95,6 @@ class ProductsTab extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 8),
-
               Expanded(
                 child: products.when(
                   loading: () => const Loading(),

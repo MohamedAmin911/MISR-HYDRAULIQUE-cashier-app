@@ -8,12 +8,10 @@ import 'package:misr_hydraulics/features/products/info_bubbles.dart';
 import '../../providers.dart';
 import 'product_dialog.dart';
 
-// Realtime products stream
 final sellerProductsProvider = StreamProvider.autoDispose<List<Product>>((ref) {
   return ref.watch(productRepositoryProvider).watchAll();
 });
 
-// Search query state
 final productQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
 class SellerProductsTab extends ConsumerWidget {
@@ -36,7 +34,6 @@ class SellerProductsTab extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Search bar
             TextField(
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
@@ -56,8 +53,6 @@ class SellerProductsTab extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
-
-            // Body
             Expanded(
               child: products.when(
                 loading: () => const Loading(),
@@ -67,7 +62,6 @@ class SellerProductsTab extends ConsumerWidget {
                     return const Center(child: Text('لا توجد منتجات بعد'));
                   }
 
-                  // Filter by name or id (case-insensitive)
                   final q = query.trim().toLowerCase();
                   final filtered = q.isEmpty
                       ? list

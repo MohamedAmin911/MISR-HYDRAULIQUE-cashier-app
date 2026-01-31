@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
 html.WindowBase? preOpenNewTab() {
-// Open a new tab synchronously (user gesture)
   final w = html.window.open('about:blank', '_blank');
   final win = w is html.Window ? w : null;
   if (win != null) {
-// Prepare an HTML page that waits for a message, embeds the PDF, and auto-prints
     final htmlDoc = '''
 
 <!doctype html><html lang="ar" dir="rtl"> <head> <meta charset="utf-8"> <title>إيصال</title> <style> body { font-family: system-ui, sans-serif; margin: 0; } .msg { padding: 24px; } a { color: #2563EB; } </style> </head> <body> <div class="msg">جاري تجهيز الإيصال...</div> <script> function safePrintFrame(frame) { try { frame.contentWindow && frame.contentWindow.focus(); frame.contentWindow && frame.contentWindow.print(); } catch (err) { console.error(err); } }
@@ -51,7 +48,6 @@ window.addEventListener('message', function (e) {
 }, { once: true });
 </script></body> </html> ''';
 
-// Load the prepared page using a data URL (no document.write needed)
     final docUrl =
         'data:text/html;base64,${base64Encode(utf8.encode(htmlDoc))}';
     win.location.href = docUrl;
@@ -61,13 +57,11 @@ window.addEventListener('message', function (e) {
 
 Future<void> openPdf(Uint8List bytes, String filename,
     {html.WindowBase? preOpened}) async {
-// Send the PDF as a base64 data URL for reliable cross-window loading/printing
   final dataUrl = 'data:application/pdf;base64,${base64Encode(bytes)}';
 
   if (preOpened != null) {
     preOpened.postMessage({'dataUrl': dataUrl}, '*');
   } else {
-// Fallback if the pre-opened tab was blocked: just open the PDF tab
     html.window.open(dataUrl, '_blank');
   }
 }

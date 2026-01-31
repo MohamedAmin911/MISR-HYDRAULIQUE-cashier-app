@@ -16,9 +16,7 @@ class PrintingService {
         format: PdfPageFormat.a4,
         dynamicLayout: false,
       );
-    } catch (_) {
-// Silent fail – use save/open fallback where needed
-    }
+    } catch (_) {}
   }
 
   static Future<String?> savePdf(Uint8List bytes, {String? filename}) async {

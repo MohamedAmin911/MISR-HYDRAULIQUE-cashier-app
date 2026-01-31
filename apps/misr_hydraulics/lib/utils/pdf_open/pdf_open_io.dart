@@ -5,6 +5,5 @@ dynamic preOpenNewTab() => null;
 
 Future<void> openPdf(Uint8List bytes, String filename,
     {dynamic preOpened}) async {
-// On desktop, open with default viewer (stable)
   await PrintingService.saveAndOpenPdf(bytes, filename: filename);
 }

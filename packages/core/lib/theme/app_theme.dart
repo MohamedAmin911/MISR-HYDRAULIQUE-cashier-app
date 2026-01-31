@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData buildAppTheme() {
-// Brand palette taken from the logo
-  const brandGold = Color(0xFFDA8C1F); // pyramid gold
-  const brandNavy = Color(0xFF1E2A44); // deep navy (logo text)
-  const paper = Color(0xFFFEF7EB); // warm paper background
-  const outline =
-      Color.fromARGB(255, 213, 174, 95); // soft outline (sand-tinted)
+  const brandGold = Color(0xFFDA8C1F);
+  const brandNavy = Color(0xFF1E2A44);
+  const paper = Color(0xFFFEF7EB);
+  const outline = Color.fromARGB(255, 213, 174, 95);
 
-// Start from seed then override to match the brand
   final baseScheme = ColorScheme.fromSeed(
     seedColor: brandGold,
     brightness: Brightness.light,
@@ -33,10 +30,8 @@ ThemeData buildAppTheme() {
   );
 
   return base.copyWith(
-// Typography
     textTheme: GoogleFonts.tajawalTextTheme(base.textTheme),
 
-// AppBar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
       foregroundColor: baseScheme.onSurface,
@@ -51,7 +46,6 @@ ThemeData buildAppTheme() {
       iconTheme: IconThemeData(color: baseScheme.onSurface),
     ),
 
-// Inputs
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: baseScheme.surface.withOpacity(0.9),
@@ -73,7 +67,6 @@ ThemeData buildAppTheme() {
       prefixIconColor: baseScheme.onSurface.withOpacity(0.75),
     ),
 
-// Buttons
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: brandGold,
@@ -96,15 +89,13 @@ ThemeData buildAppTheme() {
       ),
     ),
 
-// Chips
     chipTheme: base.chipTheme.copyWith(
-      side: BorderSide(color: outline),
+      side: const BorderSide(color: outline),
       backgroundColor: baseScheme.surface.withOpacity(0.7),
       labelStyle: TextStyle(color: baseScheme.onSurface),
       selectedColor: const Color.fromARGB(255, 250, 248, 246).withOpacity(0.1),
     ),
 
-// NavigationBar
     navigationBarTheme: NavigationBarThemeData(
       indicatorColor: brandGold.withOpacity(0.15),
       surfaceTintColor: Colors.transparent,
@@ -127,8 +118,7 @@ ThemeData buildAppTheme() {
 //   surfaceTintColor: Colors.transparent,
 // ),
 
-// Dividers & outlines
-    dividerTheme: DividerThemeData(
+    dividerTheme: const DividerThemeData(
       color: outline,
       thickness: 1,
       space: 16,

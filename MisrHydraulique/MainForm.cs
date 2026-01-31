@@ -17,7 +17,7 @@ private readonly WebView2 webView = new WebView2();
         Text = "MisrHydraulique";
         WindowState = FormWindowState.Maximized;
 
-        // Optional: app icon
+      
         var icoPath = Path.Combine(AppContext.BaseDirectory, "Assets", "app.ico");
         if (File.Exists(icoPath)) this.Icon = new Icon(icoPath);
 
@@ -30,9 +30,9 @@ private readonly WebView2 webView = new WebView2();
     private async void MainForm_LoadAsync(object? sender, EventArgs e)
     {
         var exeDir  = AppContext.BaseDirectory;
-        var webDir  = Path.Combine(exeDir, "web");        // Flutter build
-        var runtime = Path.Combine(exeDir, "WebView2");    // Fixed version runtime (portable)
-        var userData = Path.Combine(exeDir, "Data");       // PORTABLE DATA HERE
+        var webDir  = Path.Combine(exeDir, "web");       
+        var runtime = Path.Combine(exeDir, "WebView2");    
+        var userData = Path.Combine(exeDir, "Data");       
         Directory.CreateDirectory(userData);
 
         try
@@ -47,7 +47,6 @@ private readonly WebView2 webView = new WebView2();
             }
             else
             {
-                // Fallback to system Evergreen runtime if available
                 env = await CoreWebView2Environment.CreateAsync(userDataFolder: userData);
             }
 
@@ -66,7 +65,6 @@ private readonly WebView2 webView = new WebView2();
             webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             webView.CoreWebView2.Settings.AreDevToolsEnabled = false;
 
-            // Map a secure virtual host to local folder (service worker works)
             webView.CoreWebView2.SetVirtualHostNameToFolderMapping(
                 "app.local",
                 webDir,

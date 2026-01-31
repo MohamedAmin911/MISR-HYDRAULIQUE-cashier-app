@@ -36,7 +36,7 @@ class TransactionTile extends ConsumerWidget {
               child: const Text('طباعة'),
             ),
             const SizedBox(width: 8),
-            isAdmin //remove-------------------------------------------------
+            isAdmin
                 ? FilledButton.tonal(
                     style: FilledButton.styleFrom(
                       backgroundColor:

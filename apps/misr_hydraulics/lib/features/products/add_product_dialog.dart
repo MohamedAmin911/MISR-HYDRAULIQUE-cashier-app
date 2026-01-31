@@ -61,7 +61,8 @@ class _AddProductDialogState extends ConsumerState<AddProductDialog> {
                                           FilledButton(
                                             style: FilledButton.styleFrom(
                                               backgroundColor:
-                                                  const Color.fromARGB(189, 244, 67, 54),
+                                                  const Color.fromARGB(
+                                                      189, 244, 67, 54),
                                               minimumSize: const Size(32, 32),
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -235,7 +236,6 @@ class _AddProductDialogState extends ConsumerState<AddProductDialog> {
                     });
                     try {
                       final repo = ref.read(productRepositoryProvider);
-                      // In our Hive model, Product has categoryName only (no categoryId).
                       final p = Product()
                         ..name = nameCtrl.text.trim()
                         ..categoryName = selectedCategoryName ?? ''

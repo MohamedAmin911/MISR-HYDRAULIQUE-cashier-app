@@ -67,7 +67,6 @@ class BranchUsersTab extends ConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Branch header row
                               Row(
                                 children: [
                                   const Icon(
@@ -113,7 +112,6 @@ class BranchUsersTab extends ConsumerWidget {
                                           context,
                                           sellersCount: sellers.length);
                                       if (ok == true) {
-                                        // Delete sellers of this branch then branch
                                         for (final u in sellers) {
                                           await ref
                                               .read(userRepoProvider)
@@ -135,7 +133,6 @@ class BranchUsersTab extends ConsumerWidget {
                                 ],
                               ),
                               const SizedBox(height: 8),
-                              // Sellers list
                               if (sellers.isEmpty)
                                 const Text('لا يوجد بائعين لهذا الفرع'),
                               if (sellers.isNotEmpty)

@@ -17,7 +17,6 @@ class LocalDb {
     if (_inited) return;
     await Hive.initFlutter();
 
-// Register adapters once
     Hive
       ..registerAdapter(UserRoleAdapter())
       ..registerAdapter(BranchAdapter())
@@ -28,7 +27,6 @@ class LocalDb {
       ..registerAdapter(CategoryAdapter())
       ..registerAdapter(ExpenseAdapter());
 
-// Open boxes
     await Future.wait([
       Hive.openBox<Branch>('branches'),
       Hive.openBox<AppUser>('users'),
@@ -49,7 +47,6 @@ class LocalDb {
   static Box<Expense> get expenses => Hive.box<Expense>('expenses');
 }
 
-// Seed admin (first run)
 Future<void> seedAdminIfMissing() async {
   final u = LocalDb.users;
   if (u.isNotEmpty) return;

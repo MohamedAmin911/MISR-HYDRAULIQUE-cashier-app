@@ -5,7 +5,6 @@ import '../models/sale_transaction.dart';
 import '../models/transaction_item.dart';
 
 class TxRepo {
-  // Watch all transactions, newest first
   Stream<List<SaleTx>> watchAllDesc() async* {
     final box = LocalDb.transactions;
 
@@ -19,7 +18,6 @@ class TxRepo {
     yield* box.watch().map((_) => sortDesc());
   }
 
-  // Watch by seller, newest first
   Stream<List<SaleTx>> watchBySellerDesc(int sellerUserId) async* {
     final box = LocalDb.transactions;
 
@@ -41,9 +39,8 @@ class TxRepo {
     required int? branchId,
     required String branchName,
     required String customerName,
-    required List<Map<String, dynamic>> cartItems, // [{productId, qty}]
+    required List<Map<String, dynamic>> cartItems,
   }) async {
-    // Decrement stock + create transaction
     double totalSell = 0;
     double totalCost = 0;
     final items = <TxItem>[];
@@ -60,15 +57,13 @@ class TxRepo {
         throw Exception('الكمية غير كافية للمنتج: ${p.name}');
       }
 
-      // Update stock
       p.quantity -= qty;
       await LocalDb.products.put(pid, p);
 
-      // Snapshot prices at sale time
-      final base = p.sellPrice; // سعر البيع الأساسي (بدون مصنعية)
-      final craft = p.craftPrice; // المصنعية لكل وحدة
-      final unitTotal = base + craft; // المجموع للوحدة
-      final buy = p.buyPrice; // التكلفة الداخلية
+      final base = p.sellPrice;
+      final craft = p.craftPrice;
+      final unitTotal = base + craft;
+      final buy = p.buyPrice;
 
       items.add(
         TxItem()
@@ -78,15 +73,14 @@ class TxRepo {
           ..buyPriceAtSale = buy
           ..baseSellPriceAtSale = base
           ..craftPriceAtSale = craft
-          ..sellPriceAtSale = unitTotal // kept for totals/back-compat
+          ..sellPriceAtSale = unitTotal
           ..quantity = qty,
       );
 
-      totalSell += unitTotal * qty; // الإيراد الصحيح
-      totalCost += buy * qty; // تكلفة الشراء الداخلية
+      totalSell += unitTotal * qty;
+      totalCost += buy * qty;
     }
 
-    // Snapshot branch phone (for receipt header)
     String phoneSnapshot = '';
     if (branchId != null) {
       final b = LocalDb.branches.get(branchId);

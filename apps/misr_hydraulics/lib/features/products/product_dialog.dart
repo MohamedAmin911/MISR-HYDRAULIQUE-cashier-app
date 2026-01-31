@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:core/core.dart'; // Product model + CurrencyFormatter
+import 'package:core/core.dart';
 import 'package:misr_hydraulics/features/products/info_bubbles.dart';
 import '../cart/cart_controller.dart';
-import '../../providers.dart';
+// import '../../providers.dart';
 
 class ProductDialog extends ConsumerStatefulWidget {
   final Product product;
@@ -29,7 +29,6 @@ class _ProductDialogState extends ConsumerState<ProductDialog> {
     super.dispose();
   }
 
-  // Helper to show generic edit dialog
   Future<void> showEditDialog({
     required String title,
     required String currentValue,
@@ -54,7 +53,7 @@ class _ProductDialogState extends ConsumerState<ProductDialog> {
             FilledButton(
               onPressed: () {
                 onSave(ctrl.text);
-                setState(() {}); // Update UI immediately
+                setState(() {});
                 Navigator.pop(ctx);
               },
               child: const Text('حفظ'),
@@ -86,7 +85,7 @@ class _ProductDialogState extends ConsumerState<ProductDialog> {
   Widget build(BuildContext context) {
     final p = widget.product;
     final maxQty = p.quantity;
-    final repo = ref.read(productRepositoryProvider);
+    // final repo = ref.read(productRepositoryProvider);
 
     // Validate Input Logic
     bool isValid = true;
@@ -105,7 +104,7 @@ class _ProductDialogState extends ConsumerState<ProductDialog> {
       child: AlertDialog(
         title: Text(p.name, textAlign: TextAlign.right),
         content: SizedBox(
-          width: 560, // The constraint for the dialog content
+          width: 560,
           child: SingleChildScrollView(
             child: Wrap(
               spacing: 10,
@@ -131,35 +130,36 @@ class _ProductDialogState extends ConsumerState<ProductDialog> {
                     // FIX: Must be smaller than SizedBox width (560) - padding
                     maxWidth: 520,
                   ),
+                InfoBubble(
+                  label: 'السعر',
+                  value: CurrencyFormatter.format(p.sellPrice),
+                  icon: Icons.sell_outlined,
+                )
 
-                // --- EDITABLE PRICE ---
-                editable(
-                  onEdit: () => showEditDialog(
-                    title: 'السعر',
-                    currentValue: p.sellPrice.toString(),
-                    onSave: (val) {
-                      final parsed = double.tryParse(val);
-                      if (parsed != null) {
-                        p.sellPrice = parsed;
-                        repo.update(p);
-                      }
-                    },
-                  ),
-                  child: InfoBubble(
-                    label: 'السعر',
-                    value: CurrencyFormatter.format(p.sellPrice),
-                    icon: Icons.sell_outlined,
-                  ),
-                ),
-                // ----------------------
-
+                // editable(
+                //   onEdit: () => showEditDialog(
+                //     title: 'السعر',
+                //     currentValue: p.sellPrice.toString(),
+                //     onSave: (val) {
+                //       final parsed = double.tryParse(val);
+                //       if (parsed != null) {
+                //         p.sellPrice = parsed;
+                //         repo.update(p);
+                //       }
+                //     },
+                //   ),
+                //   child: InfoBubble(
+                //     label: 'السعر',
+                //     value: CurrencyFormatter.format(p.sellPrice),
+                //     icon: Icons.sell_outlined,
+                //   ),
+                // )
+                ,
                 InfoBubble(
                   label: 'المتوفر',
                   value: maxQty.toString(),
                   icon: Icons.inventory_2_outlined,
                 ),
-
-                // --- MANUAL QUANTITY INPUT ---
                 SizedBox(
                   width: 120,
                   child: TextField(

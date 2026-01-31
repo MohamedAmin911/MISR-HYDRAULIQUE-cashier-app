@@ -4,7 +4,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../data/models/sale_transaction.dart';
-import '../data/models/transaction_item.dart';
+// import '../data/models/transaction_item.dart';
 import '../services/currency_formatter.dart';
 import 'pdf_assets.dart';
 
@@ -53,7 +53,6 @@ class PdfReceiptBuilder {
     }
 
     pw.Widget buildItemsTable() {
-      // 1. Headers include Fabrication
       final headers = forAdmin
           ? [
               'Quantite',
@@ -75,18 +74,12 @@ class PdfReceiptBuilder {
       for (int i = 0; i < tx.items.length; i++) {
         final it = tx.items[i];
 
-        // 2. MATH FIX:
-        // Item total is purely (Price * Qty).
-        // We do NOT add craftPrice here.
         final totalItemSell = it.sellPriceAtSale * it.quantity;
 
         final productLabel = (it.categoryName?.isNotEmpty ?? false)
             ? it.categoryName!
             : it.productName;
 
-        // 3. UNIFIED VISUALS:
-        // Show Fabrication price only on the first row (i == 0).
-        // It shows even if 0. Empty string for other rows.
         final fabDisplayText =
             (i == 0) ? CurrencyFormatter.format(tx.craftPrice) : '';
 
@@ -139,8 +132,6 @@ class PdfReceiptBuilder {
     }
 
     pw.Widget buildTotals() {
-      // 4. GRAND TOTAL CALCULATION:
-      // Sum of all items + The single Craft Price
       final totalGeneral = tx.totalSell + tx.craftPrice;
 
       return pw.Align(
@@ -152,7 +143,6 @@ class PdfReceiptBuilder {
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  // This total includes the fabrication cost
                   pw.Text(
                       'Total Général: ${CurrencyFormatter.format(totalGeneral)}',
                       style: pw.TextStyle(font: PdfAssets.bold, fontSize: 12)),

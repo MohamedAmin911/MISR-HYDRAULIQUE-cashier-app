@@ -24,7 +24,7 @@ class CartTab extends ConsumerStatefulWidget {
 class _CartTabState extends ConsumerState<CartTab> {
   late final TextEditingController _customerCtrl;
   late final TextEditingController _craftPriceCtrl = TextEditingController();
-  bool _processing = false; // NEW: loading overlay flag
+  bool _processing = false;
 
   @override
   void initState() {
@@ -54,7 +54,6 @@ class _CartTabState extends ConsumerState<CartTab> {
 
     final content = Column(
       children: [
-        // اسم العميل (مطلوب)
         Row(
           children: [
             Expanded(
@@ -84,15 +83,13 @@ class _CartTabState extends ConsumerState<CartTab> {
           ],
         ),
         const SizedBox(height: 12),
-
-        // زر إتمام العملية
         Align(
           alignment: Alignment.centerLeft,
           child: FilledButton.icon(
             onPressed: items.isEmpty || user == null || isCustomerEmpty
                 ? null
                 : () async {
-                    setState(() => _processing = true); // show overlay
+                    setState(() => _processing = true);
                     try {
                       final repo = ref.read(txRepoProvider);
 
@@ -113,24 +110,18 @@ class _CartTabState extends ConsumerState<CartTab> {
                         craftPrice: double.tryParse(_craftPriceCtrl.text) ?? 0,
                       );
 
-                      // تفريغ السلة والاسم للصفقة التالية
                       ref.read(cartProvider.notifier).clear();
                       ref.read(customerNameProvider.notifier).state = '';
                       _customerCtrl.clear();
                       _craftPriceCtrl.clear();
 
-                      // إنشاء PDF (still under overlay)
                       final bytes = await PdfReceiptBuilder.build(
                         tx: tx,
                         forAdmin: true,
                       );
 
-                      // Hide overlay right before opening the print/preview,
-                      // so the popup appears immediately to the user.
                       if (mounted) setState(() => _processing = false);
 
-                      // على الويب: افتح نافذة الطباعة مباشرة (مثل المشروع القديم)
-                      // على سطح المكتب: افتح الملف في عارض النظام (أكثر استقرارًا)
                       try {
                         if (kIsWeb) {
                           await PrintingService.printPdf(
@@ -175,10 +166,7 @@ class _CartTabState extends ConsumerState<CartTab> {
             label: const Text('إتمام العملية'),
           ),
         ),
-
         const SizedBox(height: 12),
-
-        // عناصر السلة
         Expanded(
           child: items.isEmpty
               ? const Center(child: Text('السلة فارغة'))
@@ -233,7 +221,6 @@ class _CartTabState extends ConsumerState<CartTab> {
                   },
                 ),
         ),
-
         const Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,

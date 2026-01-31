@@ -18,10 +18,8 @@ class _AdminProductDetailsDialogState
   @override
   Widget build(BuildContext context) {
     final repo = ref.read(productRepositoryProvider);
-    // Access the widget's product directly
     final product = widget.product;
 
-    // Helper to show generic edit dialog
     Future<void> showEditDialog({
       required String title,
       required String currentValue,
@@ -50,9 +48,7 @@ class _AdminProductDetailsDialogState
                   child: const Text('إلغاء')),
               FilledButton(
                 onPressed: () {
-                  // 1. Run the save logic (updates object & DB)
                   onSave(ctrl.text);
-                  // 2. Force rebuild of the dialog to show new value instantly
                   setState(() {});
                   Navigator.pop(ctx);
                 },
@@ -64,12 +60,10 @@ class _AdminProductDetailsDialogState
       );
     }
 
-    // Helper wrapper to put Edit button next to InfoBubble
     Widget editable({
       required Widget child,
       required VoidCallback onEdit,
     }) {
-      // FIX: Changed Row to Stack because Positioned only works in Stack
       return Row(
         children: [
           child,
@@ -114,14 +108,11 @@ class _AdminProductDetailsDialogState
               alignment: WrapAlignment.start,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                // ID (Not Editable)
                 InfoBubble(
                   label: 'المعرف',
                   value: product.id.toString(),
                   icon: Icons.tag,
                 ),
-
-                // Category
                 editable(
                   onEdit: () {
                     showEditDialog(
@@ -139,8 +130,6 @@ class _AdminProductDetailsDialogState
                     icon: Icons.category_outlined,
                   ),
                 ),
-
-                // Description
                 editable(
                   onEdit: () => showEditDialog(
                     title: 'الوصف',
@@ -160,8 +149,6 @@ class _AdminProductDetailsDialogState
                     maxWidth: 520,
                   ),
                 ),
-
-                // Buy Price
                 editable(
                   onEdit: () => showEditDialog(
                     title: 'سعر الشراء',
@@ -181,8 +168,6 @@ class _AdminProductDetailsDialogState
                     icon: Icons.south_west,
                   ),
                 ),
-
-                // Sell Price
                 editable(
                   onEdit: () => showEditDialog(
                     title: 'سعر البيع',
@@ -202,8 +187,6 @@ class _AdminProductDetailsDialogState
                     icon: Icons.north_east,
                   ),
                 ),
-
-                // Quantity
                 editable(
                   onEdit: () => showEditDialog(
                     title: 'الكمية',

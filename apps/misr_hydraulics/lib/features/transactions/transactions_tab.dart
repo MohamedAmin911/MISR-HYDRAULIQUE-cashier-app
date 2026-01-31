@@ -9,16 +9,14 @@ enum TxSort { desc, asc }
 
 final txSortProvider = StateProvider<TxSort>((ref) => TxSort.desc);
 
-// Search query
 final txQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
-// Base stream (newest first), then in UI we sort/filter based on state
 final txsSortedProvider = StreamProvider.autoDispose<List<SaleTx>>((ref) {
   final sort = ref.watch(txSortProvider);
   return ref.watch(txRepoProvider).watchAllDesc().map((list) {
     if (sort == TxSort.desc) return list;
     final copy = [...list];
-    copy.sort((a, b) => a.date.compareTo(b.date)); // ascending
+    copy.sort((a, b) => a.date.compareTo(b.date));
     return copy;
   });
 });
@@ -38,7 +36,6 @@ class TransactionsTab extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Search bar
             TextField(
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
@@ -59,8 +56,6 @@ class TransactionsTab extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
-
-            // Sort controls
             Align(
               alignment: Alignment.centerLeft,
               child: SegmentedButton<TxSort>(
@@ -83,14 +78,11 @@ class TransactionsTab extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
-
-            // List
             Expanded(
               child: txs.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, st) => Center(child: Text('خطأ: $e')),
                 data: (list) {
-                  // Filter by ID / customerName / sellerUsername / branchName
                   final q = query.trim().toLowerCase();
                   final filtered = q.isEmpty
                       ? list

@@ -92,7 +92,6 @@ class _AddBranchAndUserDialogState
                       saving = true;
                     });
                     try {
-// Uniqueness check: username
                       final existing =
                           await ref.read(userRepoProvider).watchAll().first;
                       if (existing.any((u) =>

@@ -21,9 +21,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-// Full-width strip logo
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(170), // adjust height as needed
+          preferredSize: const Size.fromHeight(170),
           child: AppBar(
             automaticallyImplyLeading: false,
             title: null,

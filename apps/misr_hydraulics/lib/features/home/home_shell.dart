@@ -70,14 +70,13 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             ),
           ];
 
-// Keep index in range if role changes (number of tabs changes)
     index = index.clamp(0, pages.length - 1);
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(170), // adjust height as needed
+          preferredSize: const Size.fromHeight(170),
           child: AppBar(
             automaticallyImplyLeading: false,
             title: null,

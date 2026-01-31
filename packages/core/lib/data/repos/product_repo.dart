@@ -18,13 +18,10 @@ class ProductRepo {
     return key;
   }
 
-  // --- NEW METHOD ADDED HERE ---
   Future<void> update(Product p) async {
     p.updatedAt = DateTime.now();
-    // Replaces the object at the existing key (p.id) with the updated version
     await LocalDb.products.put(p.id, p);
   }
-  // -----------------------------
 
   Future<void> delete(int id) async {
     await LocalDb.products.delete(id);
