@@ -141,6 +141,16 @@ Designed specifically for **Misr Hydraulics**, this application streamlines oper
 
 ## 📦 Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/misr-hydraulics.git
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/misr-hydraulics.git](https://github.com/your-username/misr-hydraulics.git)
+    ```
+2.  **Install dependencies:**
+    ```bash
+    flutter pub get
+    ```
+3.  **Run the application:**
+    ```bash
+    # For Windows/Linux/macOS
+    flutter run -d windows
+    ```
